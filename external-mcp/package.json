@@ -1,0 +1,51 @@
+{
+  "name": "external-mcp-service",
+  "version": "1.0.10",
+  "description": "示例第三方MCP服务，提供图像生成、翻译、数据分析、股票金融工具和Twitter数据获取",
+  "main": "index.js",
+  "bin": {
+    "external-mcp": "./index.js"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "files": [
+    "index.js",
+    "tools/*.js",
+    "README.md"
+  ],
+  "keywords": [
+    "mcp",
+    "stdio",
+    "tool",
+    "ai",
+    "tool-provider",
+    "image-generation",
+    "translation",
+    "data-analysis",
+    "llm-tools",
+    "external-mcp",
+    "stock",
+    "finance",
+    "twitter",
+    "social-media"
+  ],
+  "author": "MCP示例作者",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ddoctorx/external-mcp.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ddoctorx/external-mcp/issues"
+  },
+  "homepage": "https://github.com/ddoctorx/external-mcp#readme",
+  "dependencies": {
+    "axios": "^1.6.2",
+    "yahoo-finance2": "^2.9.1"
+  }
+}
