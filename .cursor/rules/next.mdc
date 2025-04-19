@@ -1,0 +1,26 @@
+---
+description: 
+globs: app/**/*.tsx,components/**/*.tsx
+alwaysApply: false
+---
+---
+description: Next.js App‑Router guard
+globs:
+  - app/**/*.tsx
+  - components/**/*.tsx
+type: Auto Attached
+---
+
+# Server / Client 边界
+* `use client` 指令仅在需要浏览器 API 时添加
+* Server 组件禁止 `useState` / `useEffect`
+* Client 组件禁止 `server-only` import
+
+# Routing
+* 页面文件必须导出 `metadata`
+* 需要 `generateStaticParams` 时，返回值必须类型注解
+* 同级需提供 `error.tsx` / `not-found.tsx` 处理异常
+
+# Next 专用
+* `<Image>` 代替 `<img>`；缺失即 eslint `@next/next/no-img-element` fail
+* `<Link>` 代替裸 `<a>`

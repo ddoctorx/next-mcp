@@ -1,0 +1,23 @@
+---
+description: 
+globs: app/**/*.tsx,components/**/*.tsx,server/**/*.ts
+alwaysApply: false
+---
+---
+description: Documentation‑Driven Development guardrails
+type: Auto Attached
+globs:
+  - app/**/*.tsx
+  - components/**/*.tsx
+  - server/**/*.ts
+---
+
+# 文档先行
+
+* **组件**  
+  * 必须有 JSDoc & Storybook “Docs” 页  
+  * 需包含至少 1 个交互示例  
+* **API Route / Express Controller**  
+  * 先改 `openapi.yaml` + 示例 request/response  
+  * 缺文档 = CI fail (`npm run docs:lint`)
+* 合并前必须跑：`storybook:build` + `redoc-cli bundle openapi.yaml`

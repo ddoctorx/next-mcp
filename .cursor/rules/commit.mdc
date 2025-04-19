@@ -1,0 +1,12 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+---
+description: Conventional Commit guard
+type: Always
+---
+
+提交说明必须符合 `<type>(<scope>): <description>`  
+**type** ∈ { feat, fix, docs, style, refactor, test, chore }

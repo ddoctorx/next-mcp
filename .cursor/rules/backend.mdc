@@ -4,15 +4,12 @@ globs: server/**/*.ts
 alwaysApply: false
 ---
 ---
-description: Enforce Express-layer boundaries & security
+description: Express layer boundaries & security
 globs: server/**/*.ts
 type: Auto Attached
 ---
 
-# 硬护栏（CI 可检查）
-
-* 路由文件 只调用 `*Service`，禁止 `import Dynamo*`, `db.*`  
-* 必须 `export const router = Router()`，其他变量不得导出  
-* 所有 `POST|PUT|PATCH` 必须校验 `Zod` schema，同名文件 `*.schema.ts`  
-* 响应体统一 `status | data | error` 结构，缺失即 Vitest e2e fail  
-* 允许的中间件：`helmet`, `cors`, `morgan`, `express‑async‑errors`
+* 路由文件只调用 `*Service`，禁止直接导入 `Dynamo*`  
+* `POST|PUT|PATCH` 必须使用 Zod 校验（同目录 `*.schema.ts`）  
+* 统一响应体：`{ status, data, error }`
+* 允许中间件：helmet, cors, morgan, express‑async‑errors

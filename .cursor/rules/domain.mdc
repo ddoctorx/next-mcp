@@ -4,36 +4,20 @@ globs:
 alwaysApply: true
 ---
 ---
-description: DDD & SOLID enforceable domain guardrails
+description: Domain layer guardrails (optional)
 type: Always
 ---
 
-# 文件布局 – *do not violate*  
-* `src/domain/**`   – 纯业务对象与服务（无 DB / HTTP / UI 依赖）  
-* `src/app/**`      – 用例服务，组合 domain + infra  
-* `src/infra/**`    – 数据库、队列、第三方 API 适配器  
-* `src/ui/**`       – React + shadcn 组件 (Tailwind)  
+# 文件布局
+* `domain/**`：纯业务对象与服务（无 DB / HTTP / UI 依赖）
+* `app-services/**`：用例服务
+* `infra/**`：DB / 外部 API 适配器
 
-# 聚合与实体  
-* **PracticeTemplate** 与 **PracticeSession** 为独立聚合根：  
-  * `src/domain/practice/template.(ts|py)`  
-  * `src/domain/practice/session.(ts|py)`  
-* 任何领域服务只能依赖聚合根的公有方法，禁止横向直接数据访问。  
+# 聚合根示例
+* PracticeTemplate, PracticeSession
+* 每个聚合根配 `*Repository` interface
 
-# Repository 规则  
-* 每个聚合根必须配对 `*Repository` 接口，存放 `src/app/repositories/`  
-* 基础实现放 `src/infra/dynamo/`，命名 `<Aggregate>DynamoRepo.*`  
-* 查询键固定：  
-  * Template → `pk=template#{id}`, `sk=profile`  
-  * Session  → `pk=session#{id}`,  `sk=profile`  
-  * Message  → `pk=session#{id}`,  `sk=msg#{timestamp}`  
-
-# API 约束  
-* `/v1/practice-templates/**` 只能调用 **PracticeTemplateService**  
-* `/v1/practice-sessions/**` 只能调用 **PracticeSessionService**  
-* 禁止在路由里直接操作 DynamoDB。  
-
-# SOLID 可检测条款  
-* `src/domain/**` 单文件 **≤ 1 个类**（落实 SRP）  
-* `src/domain/**` 不得出现 `instanceof`（有违 LSP）  
-* 任一文件循环依赖 → CI fail（强化 DIP）  
+# DynamoDB PK/SK
+* Template → `template#{id}` / `profile`
+* Session  → `session#{id}` / `profile`
+* Message  → `session#{id}` / `msg#{timestamp}`
