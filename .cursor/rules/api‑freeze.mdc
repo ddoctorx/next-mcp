@@ -1,0 +1,14 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+---
+description: Freeze public HTTP routes & exported UI components
+type: Always
+---
+
+* `/api/**` 路由签名四周内不得破坏向后兼容  
+* `src/components/**` 下任何以 `export` 导出的 UI 组件，修改 props 需：  
+  1. 新增可选字段或 default 值  
+  2. 在 changelog 标记 `BREAKING CHANGE` 并提供迁移说明  

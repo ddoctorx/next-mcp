@@ -1,0 +1,15 @@
+---
+description: 
+globs: src/**/*.tsx,src/**/*.ts,server/**/*.ts
+alwaysApply: false
+---
+---
+description: Complexity & duplication guard
+globs:
+  - src/**/*.tsx
+  - server/**/*.ts
+type: Auto Attached
+---
+
+* 使用 `npx complexity-report --no-core-size`；阈值前端 15 / 后端 12  
+* 同一 Tailwind class 序列重复 > 3 次 → 抽成语义化 `@apply` in `index.css`

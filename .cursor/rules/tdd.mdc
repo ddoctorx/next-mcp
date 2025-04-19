@@ -1,0 +1,20 @@
+---
+description: 
+globs: src/**/*.tsx,server/**/*.ts,tests/**/*.tsx,tests/**/*.ts,src/**/*.ts
+alwaysApply: false
+---
+---
+description: Enforce red‑green‑refactor with Vitest & Playwright
+globs:
+  - src/**/*.tsx
+  - src/**/*.ts
+  - server/**/*.ts
+  - tests/**/*.tsx
+  - tests/**/*.ts
+type: Auto Attached
+---
+
+1. 前端：用 `@testing-library/react` 编写行为测试；mock fetch via MSW  
+2. 后端：Vitest + Supertest 断言 REST 结果  
+3. end‑to‑end：Playwright 脚本在 `e2e/`，主用户流程必须通过  
+4. `pnpm test --run` 前失败 → 不得提交  

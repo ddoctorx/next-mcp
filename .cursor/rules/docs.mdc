@@ -1,0 +1,16 @@
+---
+description: 
+globs: server/routes/**/*.ts,src/components/**/*.tsx
+alwaysApply: false
+---
+---
+description: Contract-first docs for API & UI components
+globs:
+  - server/routes/**/*.ts
+  - src/components/**/*.tsx
+type: Auto Attached
+---
+
+* **API**：改动 route 前先修改 `openapi.yaml` + 例子 JSON  
+* **UI**：公共组件 props 变化 → 需更新 `Component.stories.tsx` args & 描述  
+* CI 跑 `npm run docs:lint && npm run storybook:build`；若失败即 block

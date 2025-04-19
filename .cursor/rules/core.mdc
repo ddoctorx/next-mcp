@@ -1,0 +1,18 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+---
+description: Universal guardrails for React‑Node full‑stack
+type: Always
+---
+
+# 基础守则
+
+* **Vitest + Testing Library → 覆盖率 ≥ 90 %**  
+* **OpenAPI & Storybook Docgen 同步**  
+* **ESLint**：extends `react`, `@typescript-eslint`, `tailwindcss`, `shadcn`；任何 error = CI fail  
+* **Prettier** 启用 `@ianvs/prettier-plugin-sort-imports` + `tailwindcss-classnames`  
+* **圈复杂度**：前端单函数 ≤ 15；后端路由处理器 ≤ 12  
+* **禁止内联 Tailwind style hacks**：发现 `style=` 或 `!important` 将拒绝合并  
