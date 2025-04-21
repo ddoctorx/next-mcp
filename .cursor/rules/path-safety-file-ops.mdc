@@ -1,0 +1,33 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+---
+name: Path Safety File Operations
+ruleType: Always
+# description field is required by Cursor
+description: Ensure Cursor Agent verifies the current working directory (CWD) and uses absolute paths for every file‑system modification.
+---
+
+# Path Safety for File Operations
+
+## Enforcement Checklist
+1. **Verify CWD** – Before running any `create`, `edit`, `delete`, `move`, or `rename` command, execute a shell or API call (e.g. `pwd`) and confirm the absolute path printed is the intended target directory.
+2. **Use Absolute Paths** – All paths supplied to Cursor tools must be absolute (e.g. `/Users/alice/project/src/index.ts`). Avoid `./`, `../`, or implied CWD references.
+3. **Navigate Safely** – If the verified CWD is not the target, issue a `cd <absolute‑path>` first, then perform the operation.
+4. **Handle Missing Folders** – When the target directory does not exist, create it with `mkdir -p <absolute‑path>` before switching or operating.
+5. **Non‑Destructive Deletes** – Before any destructive command (e.g. `rm`, `delete`), list the resolved absolute path and prompt for confirmation if running in interactive mode.
+6. **Idempotency** – Commands must not create duplicates or overwrite existing files blindly; check existence before writing.
+7. **Logging** – Echo each command with its resolved absolute path into the chat transcript or system log for traceability.
+
+## Good vs Bad Examples
+```bash
+# Good Practice
+pwd  # -> /Users/alice/projects/cool-app
+cd /Users/alice/projects/cool-app/src/components
+mv /Users/alice/projects/cool-app/tmp/temp.js /Users/alice/projects/cool-app/src/components/Button.jsx
+
+# Bad Practice
+rm -rf *  # executed in wrong directory because CWD was not verified
+mv temp.js ../components/  # relative paths prone to error

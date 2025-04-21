@@ -1,6 +1,6 @@
 ---
-description: 
-globs: 
+description:
+globs:
 alwaysApply: true
 ---
 ---
@@ -10,12 +10,13 @@ type: Always
 
 # 基础守则
 
+* **每次执行命令之前都必须检查自己在什么目录下**
 * **TDD 必须**：Jest + Testing‑Library 覆盖率 ≥ 90 %
 * **DDD = Documentation‑Driven Development**：公共符号先写文档
 * **ESLint**：extends `next`, `@typescript-eslint`, `tailwindcss`, `shadcn`
 * **Prettier**：启用 Tailwind class & import 排序插件
-* **圈复杂度**  
-  * Client 组件 ≤ 15  
-  * Server 组件 / Route Handler ≤ 12  
+* **圈复杂度**
+  * Client 组件 ≤ 15
+  * Server 组件 / Route Handler ≤ 12
   * 后端 Express 路由处理器 ≤ 12
 * **禁止**：`console.log`, `debugger`, 内联 `style=`、Tailwind `!important`
