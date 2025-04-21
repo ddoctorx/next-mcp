@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, ChangeEvent, FormEvent } from 'react';
+import { useState, ChangeEvent, FormEvent, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
 
@@ -26,12 +26,12 @@ export default function AddMcpForm({ onMcpAdded }: AddMcpFormProps) {
   const [isFormValid, setIsFormValid] = useState(false);
 
   // 假设当前会话ID保存在localStorage中
-  useState(() => {
+  useEffect(() => {
     const storedSessionId = localStorage.getItem('currentSessionId');
     if (storedSessionId) {
       setSessionId(storedSessionId);
     }
-  });
+  }, []);
 
   const handleInputChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
