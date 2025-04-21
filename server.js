@@ -4,6 +4,7 @@ const next = require('next');
 const { Server } = require('socket.io');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const mcpService = require('./src/server');
 
 const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
@@ -25,24 +26,8 @@ app.prepare().then(() => {
   server.use(cors());
   server.use(bodyParser.json());
 
-  // Socket.io 连接处理
-  io.on('connection', socket => {
-    console.log(`客户端已连接: ${socket.id}`);
-
-    socket.on('join_session', sessionId => {
-      socket.join(sessionId);
-      console.log(`客户端 ${socket.id} 加入会话 ${sessionId}`);
-    });
-
-    socket.on('leave_session', sessionId => {
-      socket.leave(sessionId);
-      console.log(`客户端 ${socket.id} 离开会话 ${sessionId}`);
-    });
-
-    socket.on('disconnect', () => {
-      console.log(`客户端已断开连接: ${socket.id}`);
-    });
-  });
+  // 初始化 MCP 服务，传入 Express 服务器和 Socket.io 实例
+  mcpService.init(server, io);
 
   // Next.js 请求处理
   server.all('*', (req, res) => {
@@ -54,5 +39,6 @@ app.prepare().then(() => {
   httpServer.listen(PORT, err => {
     if (err) throw err;
     console.log(`> 服务器已启动在 http://localhost:${PORT}`);
+    console.log(`访问上面的地址管理您的MCP`);
   });
 });

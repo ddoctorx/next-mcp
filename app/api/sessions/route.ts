@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { v4 as uuidv4 } from 'uuid';
+import axios from 'axios';
 
 // 存储会话信息
 type Session = {
@@ -12,40 +12,31 @@ type Session = {
 // 内存存储会话信息
 const sessions: Record<string, Session> = {};
 
-// 创建新会话
-export async function POST(request: Request) {
+// 使用 Express 服务接口获取会话数据
+export async function GET() {
   try {
-    // 确保只读取一次请求体
-    const bodyText = await request.text();
-    const body = JSON.parse(bodyText);
-    const { userId } = body;
-
-    if (!userId) {
-      return NextResponse.json({ error: '缺少用户标识' }, { status: 400 });
-    }
-
-    const sessionId = uuidv4();
-    sessions[sessionId] = {
-      id: sessionId,
-      userId,
-      mcpSessions: {},
-      createdAt: new Date(),
-    };
-
-    return NextResponse.json({ sessionId });
+    // 调用 Express 服务器的会话接口
+    // 这避免了维护两套独立的会话存储
+    const response = await axios.get('http://localhost:3000/api/sessions/list');
+    return NextResponse.json(response.data);
   } catch (error) {
-    return NextResponse.json({ error: '创建会话失败' }, { status: 500 });
+    console.error('获取会话列表失败:', error);
+    return NextResponse.json({ error: '获取会话列表失败', success: false }, { status: 500 });
   }
 }
 
-// 获取所有会话
-export async function GET() {
-  return NextResponse.json({
-    sessions: Object.values(sessions).map(session => ({
-      id: session.id,
-      userId: session.userId,
-      createdAt: session.createdAt,
-      mcpSessionCount: Object.keys(session.mcpSessions).length,
-    })),
-  });
+// 创建新会话
+export async function POST(request: Request) {
+  try {
+    // 获取请求体，确保只解析一次
+    const bodyText = await request.text();
+    const body = JSON.parse(bodyText);
+
+    // 调用 Express 服务器创建会话
+    const response = await axios.post('http://localhost:3000/api/sessions', body);
+    return NextResponse.json(response.data);
+  } catch (error) {
+    console.error('创建会话失败:', error);
+    return NextResponse.json({ error: '创建会话失败', success: false }, { status: 500 });
+  }
 }
