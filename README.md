@@ -1,77 +1,79 @@
-# MCP 管理系统
+# MCP 注册实现系统
 
-这是一个简单的 MCP（Model Control Protocol）管理系统，允许您连接和管理多个 MCP 服务，并通过 OpenAI API 与这些工具对话。
+这是一个使用 Next.js + Tailwind CSS + shadcn/ui 的全栈应用程序，用于管理 MCP（机器控制协议）的注册和连接。
 
-## 功能
+## 技术栈
 
-- 🚀 注册和管理多个 MCP 服务
-- 🔌 支持 stdio 和 sse 类型的 MCP
-- 🔧 查看和调用 MCP 提供的工具
-- 💬 通过 OpenAI API 与 MCP 工具对话
-- 🤖 支持 OpenAI 的函数调用功能
+### 前端
 
-## 安装
+- Next.js 14
+- React 18
+- Tailwind CSS
+- shadcn/ui 组件库
+- TypeScript
+- Socket.io 客户端
 
-1. 克隆项目
+### 后端
+
+- Node.js
+- Express
+- Socket.io 服务器
+- TypeScript
+
+## 功能特点
+
+- 会话管理：创建和查看会话
+- MCP 连接管理：连接、断开和监控 MCP 进程
+- 实时通信：使用 Socket.io 实现实时更新
+- 响应式 UI：适配各种设备屏幕尺寸
+- 类型安全：使用 TypeScript 确保代码质量
+
+## 安装和运行
 
 ```bash
-git clone https://github.com/yourusername/node-mcp.git
-cd node-mcp
-```
-
-2. 安装依赖
-
-```bash
+# 安装依赖
 npm install
-```
 
-3. 配置环境变量
+# 开发模式运行
+npm run dev
 
-```bash
-cp .env.example .env
-```
+# 构建生产版本
+npm run build
 
-然后编辑`.env`文件，填写您的 OpenAI API 密钥:
-
-```
-OPENAI_API_KEY=your_openai_api_key_here
-```
-
-## 启动
-
-```bash
+# 运行生产版本
 npm start
 ```
 
-服务器将在 http://localhost:3000 启动。
+## 项目结构
 
-## 使用说明
+```
+/
+├── app/                # Next.js 应用代码
+│   ├── api/            # API 路由
+│   ├── sessions/       # 会话相关页面
+│   ├── globals.css     # 全局样式
+│   ├── layout.tsx      # 应用布局
+│   └── page.tsx        # 首页
+├── components/         # React 组件
+│   └── ui/             # UI 组件库
+├── lib/                # 工具函数
+├── public/             # 静态资源
+└── src/                # 后端源码（兼容旧版）
+```
 
-### 添加 MCP 服务
+## API 路由
 
-1. 打开浏览器访问 http://localhost:3000
-2. 在"添加 MCP"标签页中填写表单:
-   - 名称: 为 MCP 服务指定一个名称
-   - 类型: 选择 stdio 或 sse
-   - 命令: 例如 `npx -y @stripe/mcp --tools=all --api-key=YOUR_KEY`, `npx -y external-mcp-service`
-3. 点击"添加 MCP"按钮
+- `GET /api/sessions` - 获取所有会话
+- `POST /api/sessions` - 创建新会话
+- `GET /api/sessions/:id/mcp` - 获取会话的 MCP 连接
+- `POST /api/sessions/:id/mcp` - 创建 MCP 连接
+- `DELETE /api/sessions/:id/mcp` - 断开 MCP 连接
 
-### 使用聊天功能
+## 使用方法
 
-1. 添加至少一个 MCP 服务
-2. 切换到"聊天"标签页
-3. 在输入框中输入消息，例如询问如何使用某个工具
-4. AI 会根据您的问题提供回答，并在需要时调用 MCP 工具
-
-### 示例对话
-
-用户: "我需要查询天气信息"
-
-AI: "我可以帮您查询天气信息。请告诉我您想查询哪个城市的天气？"
-
-用户: "北京"
-
-AI: _调用天气工具_ "北京当前天气为晴，温度 22°C，湿度 45%..."
+1. 访问首页，点击"会话管理"进入会话列表
+2. 创建新会话或查看现有会话
+3. 在会话详情页连接新的 MCP 或管理现有连接
 
 ## 开发
 
